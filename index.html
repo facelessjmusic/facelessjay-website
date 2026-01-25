@@ -191,7 +191,7 @@ showSection("home");
 </script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-fetch('_bio/bio.md')
+fetch('bio/bio.md')
   .then(res => res.text())
   .then(md => {
     document.getElementById('bio-cms').innerHTML = marked.parse(md);
