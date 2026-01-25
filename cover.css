@@ -257,3 +257,14 @@ body {
     max-width: 72px;
   }
 }
+
+#bio-cms, #bio-cms p, #bio-cms h1, #bio-cms h2, #bio-cms h3, #bio-cms li {
+  color: #fff !important;
+  text-shadow: none !important;
+}
+
+
+#bio-cms p {
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
