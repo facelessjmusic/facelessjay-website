@@ -1,0 +1,259 @@
+/*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
+
+/* Custom default button */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: #333;
+  text-shadow: none;
+  background-color: #fff;
+  border: .05rem solid #fff;
+}
+
+/*
+ * Base structure
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: url('bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: darken;
+  color: #fff;
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* fixes Firefox Dev Edition clipping */
+  max-width: 42em;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+  position: relative;
+}
+
+/*
+ * Header
+ */
+.masthead {
+  margin-bottom: 2rem;
+  flex: 0 0 auto;
+  flex-shrink: 0;
+}
+
+.masthead .inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.masthead-brand {
+  float: none;
+  margin-bottom: 0;
+  color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+}
+
+.masthead-brand img {
+  max-height: 50px;
+  max-width: 100px;
+  width: auto;
+  display: block;
+}
+
+.nav-masthead {
+  float: none;
+}
+
+.nav-masthead .nav-link {
+  padding: .25rem 0;
+  font-weight: 700;
+  color: rgba(255, 255, 255, .5);
+  background-color: transparent;
+  border-bottom: .25rem solid transparent;
+}
+
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+  border-bottom-color: rgba(255, 255, 255, .25);
+}
+
+.nav-masthead .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+
+.nav-masthead .active {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+/*
+ * Cover / Main content
+ */
+.inner.cover {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: 700;
+}
+
+.cover-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  text-shadow: 2px 6px 6px rgba(0,0,0,.8);
+}
+
+.text-shadow {
+  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
+
+.logo-a {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background: url('logo2.svg') no-repeat center center;
+  background-size: contain;
+  vertical-align: middle;
+  margin:-10px;
+  padding:-20px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  0% { opacity: 0; transform: translateX(-50px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Apply animations */
+#content-home .hero-logo {
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+  animation-delay: 0.5s;
+}
+
+#content-bio .cover-heading {
+  margin-top: 2rem;
+  opacity: 0;
+  animation: fadeInUp 2s ease forwards;
+  animation-delay: 0.5s; /* adjusted so it triggers correctly */
+}
+
+#content-contact .fade-in-appear{
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+
+
+/*
+ * Footer
+ */
+.mastfoot {
+  font-family: 'Inter', sans-serif;
+  flex: 0 0 auto;
+  color: rgba(255, 255, 255, .5);
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* =========================
+   MOBILE FIXES
+   ========================= */
+@media (max-width: 768px) {
+
+  html, body {
+    overflow-x: hidden;
+  }
+
+  body {
+    align-items: flex-start;
+  }
+
+  .cover-container {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    justify-content: flex-start;
+  }
+
+  .masthead {
+    margin-bottom: 1rem;
+  }
+
+  .inner.cover {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Reduce bio text size */
+  #content-bio .lead {
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  /* Reduce large headings on mobile */
+  .cover-heading {
+    font-size: 2.4rem;
+    letter-spacing: 0.01em;
+  }
+
+  /* Fix logo spacing to avoid overflow */
+  .logo-a {
+    margin: 0 0.1em;
+    padding: 0;
+  }
+
+  /* Make top-left header logo slightly smaller */
+  .masthead-brand img {
+    max-height: 30px;
+    max-width: 72px;
+  }
+}
