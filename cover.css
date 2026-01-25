@@ -269,5 +269,5 @@ body {
   line-height: 1.5;
 }
 .lead{
-  color:#fff
+  color:#fff !important;
 }
