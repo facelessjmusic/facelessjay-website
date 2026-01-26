@@ -35,6 +35,6 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html
           git commit -m "Auto-update generated HTML" || echo "No changes to commit"
-          git push
-        env:
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
