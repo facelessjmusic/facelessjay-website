@@ -30,10 +30,9 @@ jobs:
       - name: Build HTML
         run: node node/build.js
 
-      # 5️⃣ (Optional) Commit the generated HTML back to the repo
-      - name: Commit and push changes
-        uses: ad-m/github-push-action@v0.6.0
+     # 5️⃣ Deploy to GitHub Pages
+      - uses: peaceiris/actions-gh-pages@v5
         with:
-          branch: main
-          commit-message: "Auto-update generated HTML"
-          force: false
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./  # assuming index.html is in repo root
+          publish_branch: gh-pages
