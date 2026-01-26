@@ -26,7 +26,7 @@ html,
 body {
   height: 100%;
   margin: 0;
-  background: url('bg.jpg') no-repeat center center fixed;
+  background: url('img/bg.jpg') no-repeat center center fixed;
   background-size: cover;
   background-color: rgba(0, 0, 0, 0.5);
   background-blend-mode: darken;
@@ -147,7 +147,7 @@ body {
   display: inline-block;
   width: 1em;
   height: 1em;
-  background: url('logo2.svg') no-repeat center center;
+  background: url('img/logo2.svg') no-repeat center center;
   background-size: contain;
   vertical-align: middle;
   margin:-10px;
