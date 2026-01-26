@@ -28,7 +28,7 @@ finalHtml = beautifyHtml(finalHtml, {
   max_preserve_newlines: 2
 });
 
-// Write to root index.html
+// Write to root index.html 
 fs.writeFileSync(outputPath, finalHtml);
 
 console.log('✅ index.html generated and formatted nicely!');
