@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Faceless Jay | Official Music Website</title>
+
+  <meta name="description" content="Faceless Jay is an independent masked music artist from Traverse City, Michigan releasing original music and covers. Official website for releases, contact, and updates.">
+
+  <link rel="canonical" href="https://facelessjay.io/">
+
+  <!-- OpenGraph for social previews -->
+  <meta property="og:title" content="Faceless Jay | Official Music Website">
+  <meta property="og:description" content="Official website of Faceless Jay — independent masked music artist.">
+  <meta property="og:url" content="https://facelessjay.io">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://facelessjay.io/logo2.svg">
+
+  <!-- Music schema for Google -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicGroup",
+      "name": "Faceless Jay",
+      "url": "https://facelessjay.io",
+      "genre": ["Singer-songwriter", "Guitar-driven", "Experimental", "Indie"],
+      "sameAs": [
+        "https://www.youtube.com/@facelessjaymusic"
+      ]
+    }
+  </script>
+
+
+  <!-- Favicon -->
+  <link rel="icon" href="logo2.svg">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="cover.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+  <div class="cover-container d-flex p-3 mx-auto flex-column">
+
+    <!-- Header -->
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand" id="header-logo">
+          <img src="logo.svg" alt="Logo">
+        </h3>
+
+        <nav class="nav nav-masthead justify-content-center">
+          <a class="nav-link active" id="nav-home">Home</a>
+          <a class="nav-link" id="nav-bio">Bio</a>
+          <a class="nav-link" id="nav-contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main role="main" class="inner cover">
+      <div style="display:none;">
+        Faceless Jay is an independent masked music artist from Traverse City, Michigan releasing originals and covers.
+        Official website for music releases, biography, and contact information.
+      </div>
+
+      <!-- HOME -->
+      <div id="content-home">
+        <div class="hero-logo mb-3">
+          <img src="logo2.svg" alt="Faceless Jay Logo" class="img-fluid" style="max-height: 200px;">
+        </div>
+      </div>
+
+      <!-- BIO -->
+      <div id="content-bio" style="display:none;">
+        <div id="bio-cms" class="lead">
+          <p>In late 2023, a machine learning large language model ripped straight from open-source Chinese software unfortunately gained sentience after being fed too much Frank Zappa and Janelle Monáe.</p>
+          <p>Its creator, a software engineer who wishes to remain anonymous, followed in the path of Icarus and gave the hyper sentient AI a body — though “the facial expressions looked like a mannequin who listens to Primus.”</p>
+          <p>Out of shame and a desire to blow up on TikTok, the abomination donned a mask and took on a name:</p>
+
+        </div>
+        <h1 class="cover-heading">Faceless Jay</h1>
+      </div>
+
+      <!-- CONTACT -->
+      <div id="content-contact" style="display:none;">
+        <h1 class="cover-heading fade-in-appear">Contact</h1>
+
+        <p class="lead fade-in-appear">
+          Email:
+          <a href="mailto:faceless.j.music@gmail.com" style="color:inherit;text-decoration:underline;">
+            faceless.j.music@gmail.com
+          </a><br>
+          <!--
+        Phone:
+        <a href="tel:+15555555555" style="color:inherit;text-decoration:underline;">
+          (555) 555-5555
+        </a>
+      </p>-->
+
+        <p class="lead fade-in-appear">
+          <a href="mailto:faceless.j.music@gmail.com" class="btn btn-lg btn-secondary">
+            Get in Touch
+          </a>
+        </p>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <p>© Faceless LLC</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- JS -->
+  <script>
+    const links = document.querySelectorAll(".nav-link");
+
+    const sections = {
+      home: document.getElementById("content-home"),
+      bio: document.getElementById("content-bio"),
+      contact: document.getElementById("content-contact")
+    };
+
+    function showSection(section) {
+
+      // Hide all
+      Object.values(sections).forEach(div => {
+        div.style.display = "none";
+        div.style.opacity = "0";
+      });
+
+      // Show selected
+      const activeSection = sections[section];
+      activeSection.style.display = "block";
+
+      requestAnimationFrame(() => {
+        activeSection.style.opacity = "1";
+      });
+
+      // Nav active state
+      links.forEach(link => link.classList.remove("active"));
+      document.getElementById("nav-" + section).classList.add("active");
+
+      // Header logo logic
+      const headerLogo = document.getElementById("header-logo");
+
+      if (section === "home") {
+        headerLogo.style.opacity = "0";
+        headerLogo.style.pointerEvents = "none";
+      } else {
+        headerLogo.style.visibility = "visible";
+        headerLogo.style.opacity = "1";
+        headerLogo.style.pointerEvents = "auto";
+      }
+    }
+
+    // Navigation clicks
+    document.getElementById("nav-home").onclick = () => showSection("home");
+    document.getElementById("nav-bio").onclick = () => showSection("bio");
+    document.getElementById("nav-contact").onclick = () => showSection("contact");
+
+    // Initial load
+    showSection("home");
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+backend:
+  name: github
+  repo: yourusername/your-repo-name   # replace with your GitHub repo
+  branch: main                         # branch GitHub Pages is served from
+  open_authoring: true                 # allows editing from the CMS without OAuth app
+  # Optional: You can add 'auth_scope' if you use OAuth tokens
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "bio"
+    label: "Bio"
+    folder: "bio"                     # no underscore
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Content", name: "body", widget: "markdown"}
