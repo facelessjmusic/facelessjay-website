@@ -26,7 +26,7 @@ jobs:
 
       # 4️⃣ Run the build script
       - name: Build HTML
-        run: node node/build.mjs
+        run: node node/build.js
 
       # 5️⃣ (Optional) Commit the generated HTML back to the repo
       - name: Commit generated HTML
