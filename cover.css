@@ -1,66 +1,121 @@
-/*
- * Globals
- */
+/* =========================
+   GLOBALS
+   ========================= */
 
 /* Links */
 a,
 a:focus,
 a:hover {
   color: #fff;
+  text-decoration: none;
 }
 
 /* Custom default button */
 .btn-secondary,
 .btn-secondary:hover,
 .btn-secondary:focus {
+  font-family: 'Space Grotesk', sans-serif;
   color: #333;
   text-shadow: none;
   background-color: #fff;
   border: .05rem solid #fff;
+  position: relative;
+  text-transform: uppercase;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease;
 }
 
-/*
- * Base structure
- */
+/* Hover glow */
+.btn-secondary:not(.deactivated):hover,
+.btn-secondary:not([disabled]):hover {
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 0 12px rgba(255,220,180,0.45),
+              0 0 25px rgba(255,180,100,0.25);
+  transform: scale(1.05);
+}
+
+/* Tap feedback */
+.btn-secondary.btn-lg:active,
+.btn-secondary:active {
+  transform: scale(0.97) !important;
+  box-shadow: 0 0 6px rgba(255,220,180,0.45),
+              0 0 12px rgba(255,180,100,0.25) !important;
+  background-color: #fff !important;
+  color: #333 !important;
+}
+
+/* Deactivated buttons */
+.btn-secondary.deactivated,
+.btn-secondary[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+  background-color: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+}
+
+/* =========================
+   BASE STRUCTURE
+   ========================= */
 html,
 body {
   height: 100%;
   margin: 0;
   background: url('img/bg.jpg') no-repeat center center fixed;
   background-size: cover;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0,0,0,0.5);
   background-blend-mode: darken;
   color: #fff;
-  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
   font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;       /* allow normal scrolling */
+  min-height: 100vh;    /* keep at least viewport height */
+  position: relative;
+}
+
+
+/* Shadow overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .cover-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* fixes Firefox Dev Edition clipping */
+  justify-content: space-between; 
   max-width: 42em;
   min-height: 100vh;
   width: 100%;
   margin: 0 auto;
   padding: 3rem 1rem;
   position: relative;
+  flex: 1 0 auto;
 }
 
-/*
- * Header
- */
+/* =========================
+   HEADER
+   ========================= */
 .masthead {
   margin-bottom: 2rem;
   flex: 0 0 auto;
   flex-shrink: 0;
+  position: relative;
 }
+
+
 
 .masthead .inner {
   display: flex;
@@ -92,14 +147,14 @@ body {
 .nav-masthead .nav-link {
   padding: .25rem 0;
   font-weight: 700;
-  color: rgba(255, 255, 255, .5);
+  color: rgba(255,255,255,0.5);
   background-color: transparent;
   border-bottom: .25rem solid transparent;
 }
 
 .nav-masthead .nav-link:hover,
 .nav-masthead .nav-link:focus {
-  border-bottom-color: rgba(255, 255, 255, .25);
+  border-bottom-color: rgba(255,255,255,0.25);
 }
 
 .nav-masthead .nav-link + .nav-link {
@@ -111,9 +166,9 @@ body {
   border-bottom-color: #fff;
 }
 
-/*
- * Cover / Main content
- */
+/* =========================
+   COVER / MAIN
+   ========================= */
 .inner.cover {
   flex: 1 0 auto;
   display: flex;
@@ -154,7 +209,123 @@ body {
   padding:-20px;
 }
 
-/* Animations */
+/* =========================
+   EVENTS
+   ========================= */
+.event-list {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 2rem;
+}
+
+.event-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  flex-wrap: wrap;
+}
+
+.event-card:last-child {
+  border-bottom: none;
+}
+
+.event-info {
+  text-align: left;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.event-date {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.event-location {
+  font-size: 0.9rem;
+  opacity: 0.75;
+  margin-top: 0.2rem;
+}
+
+.featured-event {
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow: 0 0 18px rgba(255,255,255,0.15),
+              inset 0 0 12px rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  transition: box-shadow 0.4s ease, transform 0.3s ease;
+}
+
+.featured-event:hover {
+  box-shadow: 0 0 28px rgba(255,255,255,0.25),
+              inset 0 0 14px rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+}
+
+.event-btn {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.9rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+/* =========================
+   CONTACT CARD
+   ========================= */
+.contact-card {
+  background-color: rgba(0,0,0,0.6);
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 400px;
+  margin: 2rem auto 0 auto;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(255,255,255,0.15);
+}
+
+.contact-card .lead {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Contact button */
+.contact-btn {
+  width: auto;
+  max-width: 180px;  /* prevent oversize on mobile */
+  padding: 0.4rem 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-size: 1rem;
+}
+
+.contact-btn .btn-icon {
+  display: inline-flex;
+  margin-right: 0.2rem;
+  vertical-align: middle;
+}
+
+.contact-btn .btn-icon svg {
+  width: 36px;   /* larger icon desktop-friendly */
+  height: 36px;
+}
+
+/* =========================
+   ANIMATIONS
+   ========================= */
 @keyframes fadeInUp {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
@@ -181,20 +352,18 @@ body {
   margin-top: 2rem;
   opacity: 0;
   animation: fadeInUp 2s ease forwards;
-  animation-delay: 0.5s; /* adjusted so it triggers correctly */
+  animation-delay: 0.5s;
 }
 
-#content-contact .fade-in-appear{
+#content-contact .fade-in-appear {
   opacity: 0;
   animation: fadeIn 1s ease forwards;
   animation-delay: 0.3s;
 }
 
-
-
-/*
- * Footer
- */
+/* =========================
+   FOOTER
+   ========================= */
 .mastfoot {
   font-family: 'Inter', sans-serif;
   flex: 0 0 auto;
@@ -204,16 +373,19 @@ body {
 }
 
 /* =========================
-   MOBILE FIXES
+   MOBILE / RESPONSIVE
    ========================= */
 @media (max-width: 768px) {
 
   html, body {
     overflow-x: hidden;
+    height: auto;
   }
 
+  /* Disable vertical centering behavior on mobile */
   body {
-    align-items: flex-start;
+    display: block;
+    align-items: unset;
   }
 
   .cover-container {
@@ -222,16 +394,43 @@ body {
     padding-right: 1rem;
     padding-top: 1rem;
     justify-content: flex-start;
+    min-height: auto;
   }
 
+  /* Keep header visible when scrolling */
   .masthead {
-    margin-bottom: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding-bottom: 0.5rem;
   }
 
   .inner.cover {
     padding-left: 0;
     padding-right: 0;
+    flex: none;
   }
+    /* Add vertical breathing room under header */
+  .inner.cover {
+    padding-top: 2.5rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Make main area fill screen height below header */
+  .inner.cover {
+    min-height: calc(100vh - 120px);
+    display: flex;
+  }
+
+  /* Center HOME logo vertically only */
+  #content-home {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
 
   /* Reduce bio text size */
   #content-bio .lead {
@@ -239,21 +438,51 @@ body {
     line-height: 1.45;
   }
 
-  /* Reduce large headings on mobile */
+  /* Reduce large headings */
   .cover-heading {
     font-size: 2.4rem;
     letter-spacing: 0.01em;
   }
 
-  /* Fix logo spacing to avoid overflow */
   .logo-a {
     margin: 0 0.1em;
     padding: 0;
   }
 
-  /* Make top-left header logo slightly smaller */
   .masthead-brand img {
     max-height: 30px;
     max-width: 72px;
   }
+
+  /* Shrink contact button icon on mobile */
+  .contact-btn .btn-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* =========================
+     EVENTS MOBILE FIX
+     ========================= */
+
+  .event-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .event-btn {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    max-width: 100%;
+  }
+
+  /* Center HOME logo vertically on mobile only */
+  #content-home {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 4rem
+  }
+
+
 }

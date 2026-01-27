@@ -61,6 +61,7 @@
         <nav class="nav nav-masthead justify-content-center">
           <a class="nav-link active" id="nav-home">Home</a>
           <a class="nav-link" id="nav-bio">Bio</a>
+          <a class="nav-link" id="nav-events">Events</a>
           <a class="nav-link" id="nav-contact">Contact</a>
         </nav>
       </div>
@@ -91,28 +92,99 @@
         <h1 class="cover-heading">Faceless Jay</h1>
       </div>
 
+      <!-- EVENTS -->
+      <div id="content-events" style="display:none;">
+        <!---->
+        <h1 class="cover-heading fade-in-appear">Upcoming Events</h1>
+
+        <div class="event-list">
+
+
+          <div class="event-card fade-in-appear featured-event" style="animation-delay: 0.00s">
+
+            <div class="event-info">
+              <div class="event-date">
+                Jan 30, 2026 · 6:00PM - 9:00PM
+              </div>
+
+              <div class="event-location">
+                With Scott Foor & Friends @ Founders Taproom — Traverse City, MI
+              </div>
+            </div>
+
+
+            <a href="https://identitybrewing.com/live-music-%26-events" target="_blank" rel="noopener" class="btn btn-secondary event-btn">
+              Info
+            </a>
+
+
+          </div>
+
+
+          <div class="event-card fade-in-appear " style="animation-delay: 0.15s">
+
+            <div class="event-info">
+              <div class="event-date">
+                May 8, 2026 · 7:00PM - 9:00PM
+              </div>
+
+              <div class="event-location">
+                The Workshop Brewing Co. - Traverse City, MI
+              </div>
+            </div>
+
+
+            <a href="https://workshopbrewing.co/events" target="_blank" rel="noopener" class="btn btn-secondary event-btn">
+              Info
+            </a>
+
+
+          </div>
+
+
+          <div class="event-card fade-in-appear " style="animation-delay: 0.30s">
+
+            <div class="event-info">
+              <div class="event-date">
+                May 30, 2026 · 4:00PM - 7:00PM
+              </div>
+
+              <div class="event-location">
+                Soul Squeeze Cellars — Lake Leelenau, MI
+              </div>
+            </div>
+
+
+            <a href="https://soulsqueezecellars.com/" target="_blank" rel="noopener" class="btn btn-secondary event-btn">
+              Info
+            </a>
+
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- CONTACT -->
       <!-- CONTACT -->
       <div id="content-contact" style="display:none;">
         <h1 class="cover-heading fade-in-appear">Contact</h1>
-
-        <p class="lead fade-in-appear">
-          Email:
-          <a href="mailto:faceless.j.music@gmail.com" style="color:inherit;text-decoration:underline;">
-            faceless.j.music@gmail.com
-          </a><br>
-          <!--
-        Phone:
-        <a href="tel:+15555555555" style="color:inherit;text-decoration:underline;">
-          (555) 555-5555
-        </a>
-      </p>-->
-
-        <p class="lead fade-in-appear">
-          <a href="mailto:faceless.j.music@gmail.com" class="btn btn-lg btn-secondary">
-            Get in Touch
+        <div class="contact-card fade-in-appear">
+          <p class="lead">For collaborations, press, or booking inquiries, reach out below.</p>
+          <a href="mailto:faceless.j.music@gmail.com" class="btn btn-lg btn-secondary contact-btn">
+            <span class="btn-icon">
+              <!-- Inline SVG envelope -->
+              <svg fill="currentColor" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 5H2V4H20V5H21V18H20V19H2V18H1V5M3 17H19V9H18V10H16V11H14V12H12V13H10V12H8V11H6V10H4V9H3V17M19 6H3V7H5V8H7V9H9V10H13V9H15V8H17V7H19V6Z" />
+              </svg>
+            </span>
           </a>
-        </p>
+        </div>
       </div>
+
 
     </main>
 
@@ -132,6 +204,7 @@
     const sections = {
       home: document.getElementById("content-home"),
       bio: document.getElementById("content-bio"),
+      events: document.getElementById("content-events"),
       contact: document.getElementById("content-contact")
     };
 
@@ -172,6 +245,7 @@
     document.getElementById("nav-home").onclick = () => showSection("home");
     document.getElementById("nav-bio").onclick = () => showSection("bio");
     document.getElementById("nav-contact").onclick = () => showSection("contact");
+    document.getElementById("nav-events").onclick = () => showSection("events");
 
     // Initial load
     showSection("home");
