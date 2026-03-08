@@ -70,6 +70,7 @@
           <a class="nav-link active" id="nav-home">Home</a>
           <a class="nav-link" id="nav-bio">Bio</a>
           <a class="nav-link" id="nav-events">Events</a>
+          <a class="nav-link" id="nav-music">Music</a>
           <a class="nav-link" id="nav-contact">Contact</a>
         </nav>
       </div>
@@ -112,27 +113,6 @@
 
             <div class="event-info">
               <div class="event-date">
-                Feb 26, 2026 · 5:00PM - 6:00PM
-              </div>
-
-              <div class="event-location">
-                Opening for Jazz Cabbage @ Elk Rapids Cinema — Elk Rapids, MI
-              </div>
-            </div>
-
-
-            <a href="https://www.chalfontetheatre.org/jazz-cabbage-february-26-2026" target="_blank" rel="noopener" class="btn btn-secondary event-btn">
-              Info
-            </a>
-
-
-          </div>
-
-
-          <div class="event-card fade-in-appear " style="animation-delay: 0.15s">
-
-            <div class="event-info">
-              <div class="event-date">
                 May 8, 2026 · 7:00PM - 9:00PM
               </div>
 
@@ -150,7 +130,7 @@
           </div>
 
 
-          <div class="event-card fade-in-appear " style="animation-delay: 0.30s">
+          <div class="event-card fade-in-appear " style="animation-delay: 0.15s">
 
             <div class="event-info">
               <div class="event-date">
@@ -168,6 +148,30 @@
             </a>
 
 
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- MUSIC -->
+      <div id="content-music" style="display:none;">
+        <h1 class="cover-heading fade-in-appear">Music</h1>
+
+        <div class="music-list">
+
+
+          <div class="music-card fade-in-appear" style="animation-delay: 0.00s">
+            <div class="music-embed"><iframe id="yt-0" class="yt-embed" width="560" height="315" src="https://www.youtube-nocookie.com/embed/EATKNqp0dOU?rel=0&enablejsapi=1" data-watchurl="https://www.youtube.com/watch?v=EATKNqp0dOU" title="NAMELESS_0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <div class="music-meta">
+              <div class="music-title">NAMELESS_0</div>
+              <div class="music-desc">Live at the alluvion</div>
+
+              <a href="https://www.youtube.com/watch?v=EATKNqp0dOU" target="_blank" rel="noopener" class="btn btn-secondary event-btn">Open</a>
+
+            </div>
           </div>
 
 
@@ -213,6 +217,7 @@
       home: document.getElementById("content-home"),
       bio: document.getElementById("content-bio"),
       events: document.getElementById("content-events"),
+      music: document.getElementById("content-music"),
       contact: document.getElementById("content-contact")
     };
 
@@ -254,9 +259,48 @@
     document.getElementById("nav-bio").onclick = () => showSection("bio");
     document.getElementById("nav-contact").onclick = () => showSection("contact");
     document.getElementById("nav-events").onclick = () => showSection("events");
+    document.getElementById("nav-music").onclick = () => showSection("music");
 
     // Initial load
     showSection("home");
+  </script>
+  <script>
+    // Load YouTube IFrame API and attach error handlers to replace blocked embeds with a fallback link
+    (function() {
+      // Insert the API script
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScript = document.getElementsByTagName('script')[0];
+      firstScript.parentNode.insertBefore(tag, firstScript);
+
+      // When API is ready, create players for each iframe with class 'yt-embed'
+      window.onYouTubeIframeAPIReady = function() {
+        var iframes = document.querySelectorAll('.yt-embed');
+        iframes.forEach(function(iframe) {
+          try {
+            /* global YT */
+            var player = new YT.Player(iframe.id, {
+              events: {
+                onError: function(event) {
+                  // Log numeric error for diagnosis (100/101/150/153 etc.)
+                  console.warn('YouTube player error for', iframe.id, 'code=', event.data);
+
+                  // Replace iframe with fallback notice and link
+                  var srcUrl = iframe.getAttribute('data-watchurl') || iframe.src;
+                  var fallback = document.createElement('div');
+                  fallback.className = 'music-fallback';
+                  fallback.innerHTML = '<p>Video unavailable (YouTube error ' + event.data + ') — <a href="' + srcUrl + '" target="_blank" rel="noopener">Open on YouTube</a></p>';
+                  iframe.parentNode.replaceChild(fallback, iframe);
+                }
+              }
+            });
+          } catch (e) {
+            // If constructing player fails, leave iframe as-is
+            // (errors will surface in the browser console)
+          }
+        });
+      };
+    })();
   </script>
 </body>
 
