@@ -12,6 +12,7 @@ const { html: beautifyHtml } = jsBeautify;
 const templatePath = path.join('templates', 'index.template.html');
 const bioPath = path.join('content', 'bio.md');
 const eventsPath = path.join('content', 'events.yaml');
+const musicPath = path.join('content', 'music.yaml');
 const outputPath = 'index.html';
 
 // ---------- LOAD TEMPLATE ----------
@@ -121,6 +122,94 @@ if (fs.existsSync(eventsPath)) {
 finalHtml = finalHtml.replace(
   '<!-- {{EVENTS_SECTION}} -->',
   eventsHtml
+);
+
+// ---------- MUSIC YAML ----------
+
+let musicHtml = '';
+
+if (fs.existsSync(musicPath)) {
+  const rawMusic = fs.readFileSync(musicPath, 'utf-8');
+  const musicData = yaml.load(rawMusic);
+  const items = musicData?.items || [];
+
+  if (items.length === 0) {
+    musicHtml = `
+      <div class="no-music fade-in-appear">
+        No music available — check back soon.
+      </div>
+    `;
+  } else {
+    musicHtml = items.map((item, index) => {
+
+      function extractYouTubeId(u) {
+        if (!u) return null;
+        const vMatch = u.match(/[?&]v=([\w-]{11})/);
+        if (vMatch) return vMatch[1];
+        const shortMatch = u.match(/youtu\.be\/([\w-]{11})/);
+        if (shortMatch) return shortMatch[1];
+        const embedMatch = u.match(/embed\/([\w-]{11})/);
+        if (embedMatch) return embedMatch[1];
+        return null;
+      }
+
+      function extractSpotifyEmbed(u) {
+        if (!u) return null;
+        // If it's already an embed URL, return it
+        if (u.includes('open.spotify.com/embed')) return u;
+        // Try to capture type and id (track/album/playlist)
+        const m = u.match(/open\.spotify\.com\/(track|album|playlist)\/([A-Za-z0-9]+)/);
+        if (m) return `https://open.spotify.com/embed/${m[1]}/${m[2]}`;
+        // As a fallback, return null
+        return null;
+      }
+
+      const title = item.title || '';
+      const desc = item.description ? `<div class="music-desc">${item.description}</div>` : '';
+      let embed = '';
+
+      if ((item.type || '').toLowerCase() === 'youtube') {
+        const id = extractYouTubeId(item.url);
+        if (id) {
+          // Use privacy-enhanced domain and enable JS API so we can detect player errors
+          embed = `<iframe id="yt-${index}" class="yt-embed" width="560" height="315" src="https://www.youtube-nocookie.com/embed/${id}?rel=0&enablejsapi=1" data-watchurl="${item.url}" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        }
+      } else if ((item.type || '').toLowerCase() === 'spotify') {
+        const src = extractSpotifyEmbed(item.url);
+        if (src) {
+          embed = `<iframe src="${src}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+        }
+      }
+
+      const externalLink = item.url
+        ? `
+          <a href="${item.url}" target="_blank" rel="noopener" class="btn btn-secondary event-btn">Open</a>
+        `
+        : '';
+
+      const delay = (index * 0.12).toFixed(2);
+
+      return `
+        <div class="music-card fade-in-appear" style="animation-delay: ${delay}s">
+          <div class="music-embed">${embed}</div>
+          <div class="music-meta">
+            <div class="music-title">${title}</div>
+            ${desc}
+            ${externalLink}
+          </div>
+        </div>
+      `;
+
+    }).join('\n');
+  }
+
+}
+
+// ---------- INJECT MUSIC ----------
+
+finalHtml = finalHtml.replace(
+  '<!-- {{MUSIC_SECTION}} -->',
+  musicHtml
 );
 
 // ---------- BEAUTIFY OUTPUT ----------

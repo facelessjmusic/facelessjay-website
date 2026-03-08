@@ -303,6 +303,68 @@ body::before {
 }
 
 /* =========================
+   MUSIC
+   ========================= */
+.music-list {
+  width: 100%;
+  max-width: 760px;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.music-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background-color: rgba(0,0,0,0.25);
+  border-radius: 10px;
+}
+
+.music-card:last-child { border-bottom: none; }
+
+.music-embed {
+  flex: 0 0 auto;
+}
+
+.music-meta {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.music-title {
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.02em;
+}
+
+.music-desc {
+  font-size: 0.95rem;
+  opacity: 0.85;
+  margin-bottom: 0.5rem;
+}
+
+.music-card { opacity: 0; transform: translateY(12px); animation: fadeInUp 0.6s ease forwards; }
+.music-card:nth-child(1) { animation-delay: 0.2s; }
+.music-card:nth-child(2) { animation-delay: 0.34s; }
+.music-card:nth-child(3) { animation-delay: 0.5s; }
+
+@media (max-width: 768px) {
+  .music-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .music-embed iframe {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+/* =========================
    CONTACT CARD
    ========================= */
 .contact-card {
