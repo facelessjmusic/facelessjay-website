@@ -4,26 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Faceless Jay | Official Music Website</title>
+  <title><!-- {{ARTIST_NAME}} --> | Official Music Website</title>
 
-  <meta name="description" content="Faceless Jay is an independent masked music artist from Traverse City, Michigan releasing original music and covers. Official website for releases, contact, and updates.">
+  <meta name="description" content="{{DESCRIPTION}}">
 
-  <link rel="canonical" href="https://facelessjay.io/">
+  <link rel="canonical" href="{{CANONICAL_URL}}">
 
   <!-- OpenGraph for social previews -->
-  <meta property="og:title" content="Faceless Jay | Official Music Website">
-  <meta property="og:description" content="Official website of Faceless Jay — independent masked music artist.">
-  <meta property="og:url" content="https://facelessjay.io">
+  <meta property="og:title" content="{{ARTIST_NAME}} | Official Music Website">
+  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta property="og:url" content="{{CANONICAL_URL}}">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://facelessjay.io/img/logo2.svg">
+  <meta property="og:image" content="{{OPENGRAPH_IMAGE}}">
 
   <!-- Music schema for Google -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "MusicGroup",
-    "name": "Faceless Jay",
-    "url": "https://facelessjay.io",
+    "name": "{{ARTIST_NAME}}",
+    "url": "{{CANONICAL_URL}}",
     "genre": ["Singer-songwriter", "Guitar-driven", "Experimental", "Indie"],
     "sameAs": [
       "https://www.youtube.com/@facelessjaymusic"
@@ -51,8 +51,7 @@
     crossorigin="anonymous">
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- {{FONTS}} -->
 
   <!-- Custom CSS -->
   <link href="cover.css" rel="stylesheet">
@@ -69,27 +68,27 @@
         <img src="img/logo.svg" alt="Logo">
       </h3>
 
-      <nav class="nav nav-masthead justify-content-center">
-        <a class="nav-link active" id="nav-home">Home</a>
-        <a class="nav-link" id="nav-bio">Bio</a>
-        <a class="nav-link" id="nav-events">Events</a>
-        <a class="nav-link" id="nav-music">Music</a>
-        <a class="nav-link" id="nav-contact">Contact</a>
-      </nav>
+      <div class="nav-container">
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+        <nav class="nav nav-masthead justify-content-center nav-collapsible" id="main-nav">
+          <a class="nav-link active" id="nav-home">Home</a>
+          <a class="nav-link" id="nav-bio">Bio</a>
+          <a class="nav-link" id="nav-events">Events</a>
+          <a class="nav-link" id="nav-music">Music</a>
+          <a class="nav-link" id="nav-gallery">Gallery</a>
+          <a class="nav-link" id="nav-contact">Contact</a>
+        </nav>
+      </div>
     </div>
   </header>
 
   <!-- Main Content -->
   <main role="main" class="inner cover">
-    <div style="display:none;">
-    Faceless Jay is an independent masked music artist from Traverse City, Michigan releasing originals and covers.
-    Official website for music releases, biography, and contact information.
-    </div>
 
     <!-- HOME -->
     <div id="content-home">
       <div class="hero-logo mb-3">
-        <img src="img/logo2.svg" alt="Faceless Jay Logo" class="img-fluid" style="max-height: 200px;">
+        <img src="img/logo2.svg" alt="{{ARTIST_NAME}} Logo" class="img-fluid" style="max-height: 200px;">
       </div>
     </div>
 
@@ -98,7 +97,7 @@
       <div id="bio-cms" class="lead">
         <!-- {{BIO_MARKDOWN}} -->
       </div>
-      <h1 class="cover-heading">Faceless Jay</h1>
+      <h1 class="cover-heading"><!-- {{ARTIST_NAME}} --></h1>
     </div>
 
     <!-- EVENTS -->
@@ -128,13 +127,21 @@
     </div>
 
 
-    <!-- CONTACT -->
+    <!-- GALLERY -->
+    <div id="content-gallery" style="display:none;">
+      <h1 class="cover-heading fade-in-appear">Gallery</h1>
+      <div class="gallery-grid">
+        <!-- {{GALLERY_SECTION}} -->
+      </div>
+    </div>
+
+
     <!-- CONTACT -->
     <div id="content-contact" style="display:none;">
       <h1 class="cover-heading fade-in-appear">Contact</h1>
       <div class="contact-card fade-in-appear">
-        <p class="lead">For collaborations, press, or booking inquiries, reach out below.</p>
-        <a href="mailto:faceless.j.music@gmail.com" class="btn btn-lg btn-secondary contact-btn">
+        <p class="lead"><!-- {{CONTACT_STR}} --></p>
+        <a href="mailto:{{ARTIST_EMAIL}}" class="btn btn-lg btn-secondary contact-btn">
           <span class="btn-icon">
             <!-- Inline SVG envelope -->
             <svg fill="currentColor" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
@@ -153,7 +160,7 @@
   <!-- Footer -->
   <footer class="mastfoot mt-auto">
     <div class="inner">
-      <p>© Faceless LLC (background photo taken by The Frog)</p>
+      <p><!-- {{COPYRIGHT}} --></p>
     </div>
   </footer>
 
@@ -169,7 +176,8 @@ const sections = {
   bio: document.getElementById("content-bio"),
   events: document.getElementById("content-events"),
   music: document.getElementById("content-music"),
-  contact: document.getElementById("content-contact")
+  contact: document.getElementById("content-contact"),
+  gallery: document.getElementById("content-gallery")
 };
 
 function showSection(section) {
@@ -203,6 +211,12 @@ function showSection(section) {
     headerLogo.style.opacity = "1";
     headerLogo.style.pointerEvents = "auto";
   }
+
+  // If nav is open on mobile, close it after navigation
+  const nav = document.getElementById('main-nav');
+  if (nav && nav.classList.contains('open')) {
+    nav.classList.remove('open');
+  }
 }
 
 // Navigation clicks
@@ -211,6 +225,23 @@ document.getElementById("nav-bio").onclick = () => showSection("bio");
 document.getElementById("nav-contact").onclick = () => showSection("contact");
 document.getElementById("nav-events").onclick = () => showSection("events");
 document.getElementById("nav-music").onclick = () => showSection("music");
+document.getElementById("nav-gallery").onclick = () => showSection("gallery");
+
+
+// Nav toggle for small screens
+const navToggle = document.getElementById('nav-toggle');
+const mainNav = document.getElementById('main-nav');
+
+navToggle.addEventListener('click', () => {
+  mainNav.classList.toggle('open'); // Toggle the open class
+  
+  if (mainNav.classList.contains('open')) {
+    document.body.style.overflow = 'hidden'; // Prevent scrolling when nav is open
+  } else {
+    document.body.style.overflow = ''; // Re-enable scrolling when nav is closed
+  }
+});
+
 
 // Initial load
 showSection("home");
