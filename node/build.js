@@ -13,6 +13,7 @@ const templatePath = path.join('templates', 'index.template.html');
 const bioPath = path.join('content', 'bio.md');
 const eventsPath = path.join('content', 'events.yaml');
 const musicPath = path.join('content', 'music.yaml');
+const galleryPath = path.join('content', 'gallery');
 const outputPath = 'index.html';
 
 // ---------- LOAD TEMPLATE ----------
@@ -211,6 +212,89 @@ finalHtml = finalHtml.replace(
   '<!-- {{MUSIC_SECTION}} -->',
   musicHtml
 );
+
+// ---------- GALLERY ----------
+
+let galleryHtml = '';
+
+if (fs.existsSync(galleryPath)) {
+  try {
+    const files = fs.readdirSync(galleryPath);
+    const images = files.filter(f => /\.(jpe?g|png|webp|gif|svg)$/i.test(f));
+
+    if (images.length === 0) {
+      galleryHtml = `
+        <div class="no-gallery fade-in-appear">No images found.</div>
+      `;
+    } else {
+      galleryHtml = images.map(fn => {
+        const src = path.posix.join('content', 'gallery', fn);
+        // simple download button (SVG icon)
+        const downloadBtn = `
+          <a class="gallery-download" href="${src}" download target="_blank" rel="noopener" title="Download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+        `;
+
+        return `
+          <div class="gallery-item">
+            <img src="${src}" alt="${fn}">
+            ${downloadBtn}
+          </div>
+        `;
+      }).join('\n');
+    }
+  } catch (e) {
+    galleryHtml = `<div class="no-gallery">Unable to read gallery.</div>`;
+  }
+
+} else {
+  galleryHtml = `<div class="no-gallery">Gallery folder not found.</div>`;
+}
+
+// ---------- INJECT GALLERY ----------
+
+finalHtml = finalHtml.replace('<!-- {{GALLERY_SECTION}} -->', galleryHtml);
+
+// ---------- LOAD CONFIG_DATA ----------
+
+const configRaw = fs.readFileSync(path.join('content', 'config.yaml'), 'utf-8');
+const configData = yaml.load(configRaw);
+
+
+// ---------- INJECT COPYRIGHT ----------
+const copyrightText = configData?.copyright || '';
+finalHtml = finalHtml.replace(/<!-- {{COPYRIGHT}} -->/g, copyrightText);
+
+// ---------- INJECT ARTIST NAME ----------
+const artistName = configData?.artist_name || '';
+finalHtml = finalHtml.replace(/<!-- {{ARTIST_NAME}} -->/g, artistName);
+finalHtml = finalHtml.replace(/{{ARTIST_NAME}}/g, artistName);
+
+// ---------- INJECT DESCRIPTION ----------
+const description = configData?.description || '';
+finalHtml = finalHtml.replace(/{{DESCRIPTION}}/g, description);
+
+// ---------- INJECT CANONICAL URL ----------
+const canonicalUrl = configData?.canonical_url || '';
+finalHtml = finalHtml.replace(/{{CANONICAL_URL}}/g, canonicalUrl);
+
+// ---------- INJECT OPENGRAPH IMAGE ----------
+const ogImage = configData?.['opengraph-image'] || '';
+finalHtml = finalHtml.replace(/{{OPENGRAPH_IMAGE}}/g, ogImage); 
+
+// ---------- INJECT FONTS ----------
+const fonts = configData?.fonts || [];
+const fontLinks = fonts.map(f => `<link href="${f}" rel="stylesheet">`).join('\n');
+finalHtml = finalHtml.replace('<!-- {{FONTS}} -->', fontLinks);
+
+// ---------- INJECT ARTIST EMAIL ----------
+const artistEmail = configData?.artist_email || '';
+finalHtml = finalHtml.replace(/{{ARTIST_EMAIL}}/g, artistEmail);
+
+// ---------- INJECT CONTACT STR ----------
+const contactStr = configData?.contact_str || '';
+finalHtml = finalHtml.replace(/<!-- {{CONTACT_STR}} -->/g, contactStr);
 
 // ---------- BEAUTIFY OUTPUT ----------
 

@@ -2,11 +2,33 @@
    GLOBALS
    ========================= */
 
+:root {
+  /* Background */
+  --bg-image: url('img/bg.jpg');
+  --bg-color: rgba(0,0,0,0.5);
+  --overlay-color: rgba(0,0,0,0.5);
+
+  /* Colors */
+  --text-color: #ffffff;
+  --link-color: #ffffff;
+  --muted: rgba(255,255,255,0.5);
+  --muted-strong: rgba(255,255,255,0.75);
+  --accent-color: #ffffff;
+  --accent-soft: rgba(255,220,180,0.45);
+  --accent-soft-2: rgba(255,180,100,0.25);
+  --btn-bg: #ffffff;
+  --btn-text: #333333;
+
+  /* Fonts */
+  --font-brand: 'Space Grotesk', sans-serif;
+  --font-display: 'Playfair Display', serif;
+  --font-base: 'Inter', sans-serif;
+}
 /* Links */
 a,
 a:focus,
 a:hover {
-  color: #fff;
+  color: var(--link-color);
   text-decoration: none;
 }
 
@@ -14,11 +36,11 @@ a:hover {
 .btn-secondary,
 .btn-secondary:hover,
 .btn-secondary:focus {
-  font-family: 'Space Grotesk', sans-serif;
-  color: #333;
+  font-family: var(--font-brand);
+  color: var(--btn-text);
   text-shadow: none;
-  background-color: #fff;
-  border: .05rem solid #fff;
+  background-color: var(--btn-bg);
+  border: .05rem solid var(--btn-bg);
   position: relative;
   text-transform: uppercase;
   transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease;
@@ -27,10 +49,10 @@ a:hover {
 /* Hover glow */
 .btn-secondary:not(.deactivated):hover,
 .btn-secondary:not([disabled]):hover {
-  background-color: #fff;
-  color: #333;
-  box-shadow: 0 0 12px rgba(255,220,180,0.45),
-              0 0 25px rgba(255,180,100,0.25);
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  box-shadow: 0 0 12px var(--accent-soft),
+              0 0 25px var(--accent-soft-2);
   transform: scale(1.05);
 }
 
@@ -38,10 +60,10 @@ a:hover {
 .btn-secondary.btn-lg:active,
 .btn-secondary:active {
   transform: scale(0.97) !important;
-  box-shadow: 0 0 6px rgba(255,220,180,0.45),
-              0 0 12px rgba(255,180,100,0.25) !important;
-  background-color: #fff !important;
-  color: #333 !important;
+  box-shadow: 0 0 6px var(--accent-soft),
+              0 0 12px var(--accent-soft-2) !important;
+  background-color: var(--btn-bg) !important;
+  color: var(--btn-text) !important;
 }
 
 /* Deactivated buttons */
@@ -62,13 +84,16 @@ html,
 body {
   height: 100%;
   margin: 0;
-  background: url('img/bg.jpg') no-repeat center center fixed;
+  background-image: var(--bg-image);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
   background-size: cover;
-  background-color: rgba(0,0,0,0.5);
+  background-color: var(--bg-color);
   background-blend-mode: darken;
-  color: #fff;
+  color: var(--text-color);
   text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-base);
   overflow-x: hidden;
 }
 
@@ -123,10 +148,23 @@ body::before {
   align-items: center;
 }
 
+/* Nav toggle (mobile) */
+.nav-container { display: flex; align-items: center; gap: 0.5rem; }
+.nav-toggle {
+  display: none;
+  background: transparent;
+  color: var(--text-color);
+  border: none;
+  font-size: 1.4rem;
+  padding: 0.25rem 0.5rem;
+}
+.nav-collapsible { display: flex; gap: 0.75rem; align-items: center; }
+
+
 .masthead-brand {
   float: none;
   margin-bottom: 0;
-  color: #fff;
+  color: var(--text-color);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -147,7 +185,7 @@ body::before {
 .nav-masthead .nav-link {
   padding: .25rem 0;
   font-weight: 700;
-  color: rgba(255,255,255,0.5);
+  color: var(--muted);
   background-color: transparent;
   border-bottom: .25rem solid transparent;
 }
@@ -162,8 +200,8 @@ body::before {
 }
 
 .nav-masthead .active {
-  color: #fff;
-  border-bottom-color: #fff;
+  color: var(--link-color);
+  border-bottom-color: var(--accent-color);
 }
 
 /* =========================
@@ -192,6 +230,7 @@ body::before {
   line-height: 1.05;
   text-transform: uppercase;
   text-shadow: 2px 6px 6px rgba(0,0,0,.8);
+  margin-top: 5vh
 }
 
 .text-shadow {
@@ -457,7 +496,7 @@ body::before {
    FOOTER
    ========================= */
 .mastfoot {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-base);
   flex: 0 0 auto;
   color: rgba(255, 255, 255, .5);
   text-align: center;
@@ -546,6 +585,12 @@ body::before {
     max-width: 72px;
   }
 
+  /* Show nav toggle and collapse nav into a vertical list */
+  .nav-toggle { display: block; }
+  .nav-collapsible { display: none; flex-direction: column; width: 100%; }
+  .nav-collapsible.open { display: flex; }
+  .nav-collapsible .nav-link { padding: .4rem 0; text-align: center; padding-left: 0.3rem; }
+
   /* Shrink contact button icon on mobile */
   .contact-btn .btn-icon svg {
     width: 28px;
@@ -577,4 +622,84 @@ body::before {
   }
 
 
+}
+
+/* =========================
+   GALLERY
+   ========================= */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 2rem;
+}
+.gallery-item { position: relative; overflow: hidden; border-radius: 8px; }
+.gallery-item img { width: 100%; height: auto; display: block; }
+.gallery-download {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  padding: 6px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+}
+.gallery-download svg { width: 18px; height: 18px; }
+.gallery-item:hover .gallery-download { transform: translateY(-4px); box-shadow: 0 6px 18px rgba(0,0,0,0.4); }
+
+@media (max-width: 768px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 420px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+
+
+@media (max-width: 768px) {
+/* Collapse nav for mobile */
+.nav-collapsible {
+  /*display: none; /* Initially hidden */
+  position: fixed; /* Set to fixed */
+  top: 0px; /* Align under the navbar */
+  left: 0; /* Align to the left */
+  right: 0; /* Full width */
+  height: 100vh; /* Full height minus the navbar height */
+  background-color: rgba(0, 0, 0, 0.25); /* Dark overlay */
+  /*z-index: 1000; /* Ensure it overlays above everything */
+  padding: 40px; /* Add padding for content spacing */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
+  /*opacity: 0; /* Initially hidden */
+  pointer-events: none; /* Ignore pointer events when not visible */
+  backdrop-filter: blur(4px); /* Optional: add a blur effect to the background */
+}
+
+/* When open, show the nav links */
+.nav-collapsible.open {
+  display: flex;
+  flex-direction: column; /* Stack links vertically */
+  opacity: 1; /* Make visible */
+  pointer-events: auto; /* Enable pointer events */
+}
+
+/* Nav toggle (mobile) */
+.nav-toggle {
+  display: block; /* Ensure it’s shown */
+  background: transparent;
+  color: var(--text-color);
+  border: none;
+  font-size: 1.4rem;
+  padding: 0.25rem 0.5rem;
+  z-index: 2100; /* Higher than the overlay */
+  position: relative; /* Keep it where it should be */
+}
+.nav-link{
+  margin-bottom: 6vh;
+}
 }
